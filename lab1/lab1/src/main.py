@@ -4,7 +4,7 @@ app = FastAPI()
 
 #all HTTP code justifications were taken from this website: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses
 
-#HTTP response 422 means "Bad Request" which means that the server cannot or will not process it due to a client side issue
+#HTTP response 422 means "The request was well-formed but was unable to be followed due to semantic errors."
 #ie: not filling in the name parameter
 @app.get("/hello")
 async def hello(name):
