@@ -33,12 +33,10 @@ def test_hello_quotes():
     assert response.json() == {"name": "Hello \"{}\""}
 
 def test_predict_good():
-    response = requests.post("http://localhost:8000/predict",
-                           data={"MedInc":8.3252, "HouseAge":41, "AveRooms":6.98412698, "AveBedrms":1.02380952, "Population":322
-                               , "AveOccup":2.55555556, "Latitude":37.88, "Longitude":-122.23})
-    print(response.request)
-    print(response.content)
-    print(response.json())
+    response = client.post("/predict",
+                           json={"MedInc": 8.3252, "HouseAge": 41.0, "AveRooms": 6.98412698, "AveBedrms": 1.02380952, "Population": 322.0
+                               , "AveOccup": 2.55555556, "Latitude": 37.88, "Longitude": -122.23})
+
     assert response.status_code == 200  # status code we defined in main.py
     assert response.json() == {"output(s)": [4.413388694639972]}
 
@@ -48,7 +46,7 @@ def test_predict_good_2():
     response = client.post("/predict",
                            headers={"data": "Input"},
                            json=data)
-    print(response.headers)
+    print(response.json())
     assert response.status_code == 200  # status code we defined in main.py
 
     assert response.json() == {"output(s)": [4.413388694639972]}

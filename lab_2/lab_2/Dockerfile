@@ -1,4 +1,11 @@
-FROM python:3.10 as venv
+FROM python:3.10-slim-buster as venv
+
+RUN apt-get update \
+    && apt-get install -y \
+         curl \
+         build-essential \
+         libffi-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Install poetry, see https://python-poetry.org/docs/#installation
 ENV POETRY_VERSION=1.2.0
@@ -8,27 +15,27 @@ ENV PATH /root/.local/bin:$PATH
 # Install dependencies
 WORKDIR /app
 
-RUN python -m venv /app/lab1
-COPY lab1/pyproject.toml ./
+RUN python -m venv /app/lab_2
+COPY lab_2/pyproject.toml ./
 
 
 ARG POETRY_OPTIONS
-RUN . /app/lab1/bin/activate \
+RUN . /app/lab_2/bin/activate \
     && poetry install $POETRY_OPTIONS
 
-FROM python:3.10 as prod
+FROM python:3.10-slim-buster as prod
 
 WORKDIR /app
 
-COPY --from=venv /app/lab1 /app/lab1/
+COPY --from=venv /app/lab_2 /app/lab_2/
 
-ENV PATH /app/lab1/bin:${PATH}
+ENV PATH /app/lab_2/bin:${PATH}
 
 
-COPY lab1/src/main.py ./
+COPY lab_2/src/main.py ./
 
 EXPOSE 8000
 
-#HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000', timeout=2)"
+HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000/health', timeout=2)"
 
 CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0"]

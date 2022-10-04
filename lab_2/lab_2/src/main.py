@@ -15,7 +15,6 @@ class DataInputCheck(BaseModel):
     AveRooms: float
     AveBedrms: float
     Population: float
-    HouseAge: float
     AveOccup: float
     Latitude: float
     Longitude: float
@@ -57,7 +56,7 @@ async def hello(name):
 async def root():
     raise HTTPException(status_code=501, detail="not implemented")
 
-@app.post("/predict")
+@app.post("/predict", response_model=DataInputCheck)
 async def prediction(data):
     data = json.loads(data)
     try:
