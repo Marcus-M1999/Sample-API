@@ -9,19 +9,14 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.pipeline import make_pipeline
 from sklearn.preprocessing import RobustScaler
 from sklearn.svm import SVR
-from pydantic import ValidationError
-from model import DataInputCheck, DataOutputCheck
 
+# Metadata
 data = fetch_california_housing()
-try:
-  dt = DataInputCheck(**data)
-except ValidationError as e:
-    print(e)
-features = dt.feature_names
+features = data.feature_names
 
 
-X = dt.data
-y = dt.target
+X = data.data
+y = data.target
 print(f"features: {features}")
 
 for i in range(5):
