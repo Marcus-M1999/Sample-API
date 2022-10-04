@@ -14,7 +14,7 @@ To build the application you can simply run the run.sh script under the first la
 
 > docker build -t lab2_deployed: -f lab_2/Dockerfile .
 
-> docker run --rm --name lab_2 -d -p 8000:8000 lab1_deployed
+> docker run --rm --name lab_2 -d -p 8000:8000 lab2_deployed
 
 Note: this will tag the image as "lab2_deployed" if you wish to tag the image as a different name simply change the parameter after "-t" in the docker build command. The same methodology applied to the name of the container "lab_1", simply change this parameter. Remember to change the image name (the final parameter in "docker run") so it corresponds to the tag for the image.
 In the same way, you can change the ports being used by changing the "8000:8000" parameter in the "docker run" command, where the first number refers to the port on the container, and the second number refers to the port on your local machine that you wish to map to the container. Changes may also need to be made to the Dockerfile exposing the appropriate port.
