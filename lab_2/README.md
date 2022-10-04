@@ -3,19 +3,20 @@ Lab 1- W255
 ## Documentation
 
 ##### 1.) What your application does
-My application is a version of the popular entry-level program "Hello World". It takes in an argument for the /hello command and as long as something is input it will return:
-> "{"name": "Hello " + name}"
+This application has basic functionality to say hello in response to a piece of text, and make predictions from a SVM model. Predictions are made by using the /predict endpoint and sending data in the following JSON format:
+> '{"MedInc": float, "HouseAge": float, "AveRooms": float, "AveBedrms": float, "Population": float, "AveOccup": float, "Latitude": float, "Longitude": float}'
 
+The output from this model is a float that estimates the value of a home with the above characteristics.
 Additionally, this application supports the /docs endpoint which supports the "open API" documentation. Although nothing is only the default information there currently, it has the potential to clarify API arguments.
 
 ##### 2.) How to build your application
-To build the application you can simply run the run.sh script under the first lab1 folder. This will build the application and quickly show that it is working. If you desire to take a closer look at the API for an extended period you can just the docker file to build and run the container with the following commands:
+To build the application you can simply run the run.sh script under the first lab_2 folder. This will build the application and quickly show that it is working. If you desire to take a closer look at the API for an extended period you can just the docker file to build and run the container with the following commands:
 
-> docker build -t lab1_deployed: -f lab1/Dockerfile .
+> docker build -t lab2_deployed: -f lab_2/Dockerfile .
 
-> docker run --rm --name lab_1 -d -p 8000:8000 lab1_deployed
+> docker run --rm --name lab_2 -d -p 8000:8000 lab1_deployed
 
-Note: this will tag the image as "lab1_deployed" if you wish to tag the image as a different name simply change the parameter after "-t" in the docker build command. The same methodology applied to the name of the container "lab_1", simply change this parameter. Remember to change the image name (the final parameter in "docker run") so it corresponds to the tag for the image.
+Note: this will tag the image as "lab2_deployed" if you wish to tag the image as a different name simply change the parameter after "-t" in the docker build command. The same methodology applied to the name of the container "lab_1", simply change this parameter. Remember to change the image name (the final parameter in "docker run") so it corresponds to the tag for the image.
 In the same way, you can change the ports being used by changing the "8000:8000" parameter in the "docker run" command, where the first number refers to the port on the container, and the second number refers to the port on your local machine that you wish to map to the container. Changes may also need to be made to the Dockerfile exposing the appropriate port.
 
 
@@ -32,15 +33,16 @@ Additional tests may be added as desired, using the existing testing format from
 
 
 ## Questions
-##### 1.) What status code should be raised when a query parameter does not match our expectations?
-When a query parameter does not match our expectations we raise HTML status code 422, which refers to a "request that was well-formed but unable to be followed due to semantic errors" ([source](https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#client_error_responses)). Note that the API does not check for logical errors such as including numbers, or symbols that may not normally be in names.
-
-##### 2.) What does Python Poetry handle for us?
-Poetry acts as our dependency and package manager. This means that it will install and update the libraries that we specify. It does this by tracking them in the poetry.lock file, acting similar to a requirements.txt file but with superior features since it will update the libraries. We also used Poetry to create the file structure of an src directory, and tests directory inside of the lab1 directory. Poetry also tracks the configuration we use through the pyproject.toml file. Additionally, we can use poetry to create a virtual environment.
+##### 1.) What does Pydantic handle for us?
+Pydantic is an open-source library that can be used to validate incoming data as well as confirm that outgoing data matches a format. This is helpful in our case since it provides an easy-to-understand format of what the input data should be, and allows us to validate that it follows that exact format preventing errors from arising due to an unknown data format.
 
 
-##### 3.) What advantages do multi-stage docker builds give us?
-The multi-stage docker build process we went through to create this container gives us a leaner container in terms of size. It does this by removing unnecessary items from the container since we layer the container build we get rid of the unnecessary tools and can have a smaller and faster container for use in a production environment. 
+##### 2.) What do GitHub Actions do?
+GitHub actions is a tool that automates the continuous integration and continuous delivery (CI/CD) tasks to make them easier for engineers. It accomplishes this by having a set of jobs that can include actions (such as pulling new files from your repository or setting up an environment) and scripts that can accomplish similar tasks. The automation of these monotonous steps removes the possibility of error along with any human bottlenecks (ie: someone is out to lunch and forgot to open a pull request)  since it's automated. In our case we set up GitHub Actions to create a virtual environment and run integration testing once a pull request is created. This automates a previously human-centered process, making it more efficient. 
+
+
+##### 3.) In 2-3 sentences (plain language), describe what the Sequence Diagram below shows.
+the sequence diagram below shows how the data flows in our system. It begins when a user pings our API with the payload and goes through steps 1 & 2 until it satisfies the pydantic validation tests. After our data flow to the model, which makes a prediction and then sends the data back to the API. In the final step, it gets output to the user (in our case as a number representing the value of a home).
 
 
 
