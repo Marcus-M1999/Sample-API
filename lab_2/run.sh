@@ -17,7 +17,12 @@ echo "testing '/docs' endpoint"
 curl -o /dev/null -s -w "%{http_code}\n" -X GET "http://localhost:8000/docs"
 
 echo "testing '/predict' endpoint"
-curl -d '{"MedInc": 8.3252, "HouseAge": 41.0, "AveRooms": 6.98412698, "AveBedrms": 1.02380952, "Population": 322.0, "AveOccup": 2.55555556, "Latitude": 37.88, "Longitude": -122.23}'-H 'Content-Type: application/json' localhost:8000/predict
+curl -X 'POST' \
+  'http://localhost:8000/predict' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{"MedInc": 8.3252, "HouseAge": 41.0, "AveRooms": 6.98412698, "AveBedrms": 1.02380952, "Population": 322.0
+                               , "AveOccup": 2.55555556, "Latitude": 37.88, "Longitude": -122.23}'
 
 echo "killing container"
 docker stop lab_2
