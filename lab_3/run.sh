@@ -1,8 +1,8 @@
 echo "Building Container"
-docker build -t lab2_deployed:1.0 -f lab_2/Dockerfile .
+docker build -t lab3_deployed:1.0 -f lab_3/Dockerfile .
 
 echo "Start Container in detached mode"
-docker run --rm --name lab_2 -d -p 8000:8000 lab2_deployed:1.0
+docker run --rm --name lab_3 -d -p 8000:8000 lab3_deployed:1.0
 
 echo "Wait for the Docker container to start"
 sleep 15
@@ -31,7 +31,7 @@ curl -X 'GET' \
 
 
 echo "killing container"
-docker stop lab_2
+docker stop lab_3
 
 echo "Deleting docker image"
-docker image rm lab2_deployed:1.0
+docker image rm lab3_deployed:1.0

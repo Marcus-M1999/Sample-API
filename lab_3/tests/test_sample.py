@@ -1,5 +1,5 @@
 import sys
-sys.path.append("../")
+sys.path.append("../lab_3/")
 from fastapi import FastAPI
 from fastapi.testclient import TestClient
 from src.main import app

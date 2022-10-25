@@ -15,27 +15,27 @@ ENV PATH /root/.local/bin:$PATH
 # Install dependencies
 WORKDIR /app
 
-RUN python -m venv /app/lab_2
-COPY lab_2/pyproject.toml ./
+RUN python -m venv /app/lab_3
+COPY lab_3/pyproject.toml ./
 
 
 ARG POETRY_OPTIONS
-RUN . /app/lab_2/bin/activate \
+RUN . /app/lab_3/bin/activate \
     && poetry install $POETRY_OPTIONS
 
 FROM python:3.10-slim-buster as prod
 
 WORKDIR /app
 
-COPY --from=venv /app/lab_2 /app/lab_2/
+COPY --from=venv /app/lab_3 /app/lab_3/
 
-ENV PATH /app/lab_2/bin:${PATH}
+ENV PATH /app/lab_3/bin:${PATH}
 
 
-COPY lab_2/src/main.py ./
+COPY lab_3/src/main.py ./
 
 EXPOSE 8000
 
 HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000/health', timeout=2)"
 
-CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0"]
+CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0"]

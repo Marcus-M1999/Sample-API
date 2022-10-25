@@ -7,9 +7,7 @@ from fastapi_cache.decorator import cache
 import joblib
 from pydantic import BaseModel, validator, ValidationError, Extra
 import numpy as np
-import json
 from datetime import datetime
-import mysql.connector
 
 class DataInputCheck(BaseModel):
     class Config:
@@ -50,10 +48,6 @@ model = joblib.load("../model_pipeline.pkl")
 app = FastAPI()
 
 
-cnx = mysql.connector.connect(username = 'root', password = 'root', database = 'customers', host = 'mysql')
-cursor = cnx.cursor()
-
-
 #all HTTP code justifications were taken from this website: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses
 
 #HTTP response 422 means "The request was well-formed but was unable to be followed due to semantic errors."
@@ -90,6 +84,7 @@ async def prediction(data: DataInputCheck):
         final_val = model.predict(dt).tolist()
         try:
             final = {"output": final_val}
+            await aioredis.sleep(5)
             return final
         except ValidationError as e:
             raise HTTPException(status_code=400, detail=str(e))
@@ -97,15 +92,12 @@ async def prediction(data: DataInputCheck):
         raise HTTPException(status_code=422, detail=str(e))
 
 
+
 @app.on_event('startup')
 async def startup():
     redis = aioredis.from_url('redis://redis', encoding = 'utf8', decode_responses = True)
     FastAPICache.init(RedisBackend(redis), prefix = 'fastapi-cache')
 
-@app.on_event('shutdown')
-async def shutdown():
-    cursor.close()
-    cnx.close()
 
 @app.get("/health")
 async def health():
@@ -114,3 +106,33 @@ async def health():
 if __name__=="__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
 
+
+'''
+{
+  "MedInc": [10.0, 10.0],
+  "HouseAge": [10.0, 10.0],
+  "AveRooms": [10.0, 10.0],
+  "AveBedrms": [10.0, 10.0],
+  "Population": [10.0, 10.0],
+  "AveOccup": [10.0, 10.0],
+  "Latitude": [10.0, 10.0],
+  "Longitude": [10.0, 10.0]
+}
+'''
+
+'''
+curl -X 'POST' \
+  'http://localhost:8000/predict' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "MedInc": [10.0, 10.0],
+  "HouseAge": [10.0, 10.0],
+  "AveRooms": [10.0, 10.0],
+  "AveBedrms": [10.0, 10.0],
+  "Population": [10.0, 10.0],
+  "AveOccup": [10.0, 10.0],
+  "Latitude": [10.0, 10.0],
+  "Longitude": [10.0, 10.0]
+}'
+'''
