@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-pythonapi
+  namespace: w255
+spec:
+  selector:
+    matchLabels:
+      app: pythonapi
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: pythonapi
+    spec:
+      containers:
+      - name: lab_3
+        image: lab3_deployed:1.0
+        ports:
+          - containerPort: 8000

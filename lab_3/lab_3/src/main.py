@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI, HTTPException
+import asyncio
 from redis import asyncio as aioredis
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.redis import RedisBackend
@@ -44,7 +45,8 @@ class DataInputCheck(BaseModel):
             return v
 
 
-model = joblib.load("../model_pipeline.pkl")
+
+model = joblib.load("model_pipeline.pkl")
 app = FastAPI()
 
 
@@ -81,17 +83,17 @@ async def prediction(data: DataInputCheck):
     try:
         data_loaded = np.array(data_loaded)
         dt = data_loaded.reshape(data_loaded.shape[2], 8)  # convert to numpy & reshape (8 is the number of features)
-        final_val = model.predict(dt).tolist()
+        final_val =  model.predict(dt).tolist()
         try:
             final = {"output": final_val}
-            await aioredis.sleep(5)
+            await asyncio.sleep(5)
             return final
         except ValidationError as e:
             raise HTTPException(status_code=400, detail=str(e))
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
-
+''
 
 @app.on_event('startup')
 async def startup():

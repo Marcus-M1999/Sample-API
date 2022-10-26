@@ -32,7 +32,8 @@ COPY --from=venv /app/lab_3 /app/lab_3/
 ENV PATH /app/lab_3/bin:${PATH}
 
 
-COPY lab_3/src/main.py ./
+COPY lab_3/ ./
+
 
 EXPOSE 8000
 

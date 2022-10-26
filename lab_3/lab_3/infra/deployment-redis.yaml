@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-redis
+  namespace: w255
+spec:
+  selector:
+    matchLabels:
+      app: lab_3
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: lab_3
+    spec:
+      containers:
+      - name: redis
+        image: redis:alpine
+        ports:
+          - containerPort: 6379
