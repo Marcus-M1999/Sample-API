@@ -40,7 +40,7 @@ class DataOutputCheck(BaseModel):
         return v
 
 
-model = joblib.load("../model_pipeline.pkl")
+model = joblib.load("model_pipeline.pkl")
 app = FastAPI()
 
 #all HTTP code justifications were taken from this website: https://developer.mozilla.org/en-US/docs/Web/HTTP/Status#server_error_responses

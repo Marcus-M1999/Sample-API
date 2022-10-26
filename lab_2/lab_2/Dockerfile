@@ -32,10 +32,11 @@ COPY --from=venv /app/lab_2 /app/lab_2/
 ENV PATH /app/lab_2/bin:${PATH}
 
 
-COPY lab_2/src/main.py ./
+COPY lab_2/ ./
+
 
 EXPOSE 8000
 
 HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000/health', timeout=2)"
 
-CMD ["uvicorn", "main:app", "--reload", "--host", "0.0.0.0"]
+CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0"]
