@@ -6,12 +6,12 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: lab_3
-  replicas: 3
+      app: redis
+  replicas: 1
   template:
     metadata:
       labels:
-        app: lab_3
+        app: redis
     spec:
       containers:
       - name: redis

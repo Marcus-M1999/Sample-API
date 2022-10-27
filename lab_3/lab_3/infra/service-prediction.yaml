@@ -4,9 +4,10 @@ metadata:
   name: prediction-service
   namespace: w255
 spec:
+  type: LoadBalancer
   selector:
     app: pythonapi
   ports:
   - protocol: TCP
-    port: 6379
-    targetPort: 6379
+    port: 80
+    targetPort: 8000
