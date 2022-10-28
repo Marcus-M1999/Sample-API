@@ -21,6 +21,23 @@ Kubectl apply -f lab_3/infra/service-redis.yaml -n w255
 Kubectl apply -f lab_3/infra/deployment-pythonapi.yaml -n w255
 Kubectl apply -f lab_3/infra/service-prediction.yaml -n w255
 
+echo "conducting health check"
+finished=false
+pid=0
+
+while ! $finished; do
+  kubectle port-forward service-pythonapi-service 8000:8000 -n w255 &
+  pid=$!
+  health_status=$(curl -s -o /dev/null -w "%{http_code}" -X GET "http://localhost:8000/health")
+  if [ $health_status = 200 ]; then
+    finished=true
+    echo "health check sucessful"
+  else
+    echo "No response, waiting for 15 seconds then checking again"
+    sleep 15
+  fi
+done
+
 echo "testing '/hello' endpoint with ?name=Marcus"
 curl -o /dev/null -s -w "%{http_code}\n" -X GET "http://localhost:8000/hello?name=Marcus"
 
