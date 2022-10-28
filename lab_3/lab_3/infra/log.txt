@@ -1,0 +1,181 @@
+NAME                               READY   STATUS     RESTARTS   AGE
+deploy-pythonapi-7b6779db7-cgqfl   0/1     Init:0/2   0          15m
+deploy-pythonapi-7b6779db7-m4d4s   0/1     Init:0/2   0          15m
+deploy-pythonapi-7b6779db7-xsbl2   0/1     Init:0/2   0          15m
+deploy-redis-59cc9658d5-dw5sw      1/1     Running    0          15m
+Name:             deploy-pythonapi-7b6779db7-cgqfl
+Namespace:        w255
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Wed, 26 Oct 2022 19:14:04 -0700
+Labels:           app=pythonapi
+                  pod-template-hash=7b6779db7
+Annotations:      <none>
+Status:           Pending
+IP:               172.17.0.5
+IPs:
+  IP:           172.17.0.5
+Controlled By:  ReplicaSet/deploy-pythonapi-7b6779db7
+Init Containers:
+  init-redis-up:
+    Container ID:  docker://0c75fc7a5030500fca658094e8c871ca986ef1de244f5f0a63ba8c708057d2a8
+    Image:         busybox:1.28
+    Image ID:      docker-pullable://busybox@sha256:141c253bc4c3fd0a201d32dc1f493bcf3fff003b6df416dea4f41046e0f37d47
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      until nslookup redis-service 6379; do echo waiting for redis; sleep 5; done
+    State:          Running
+      Started:      Wed, 26 Oct 2022 19:14:06 -0700
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7rbs7 (ro)
+  init-redis-ready:
+    Container ID:  
+    Image:         busybox:1.28
+    Image ID:      
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      until (printf 'PING
+      ';) | nc redis-service 6379; do echo waiting for redis to respond; sleep 5; done
+    State:          Waiting
+      Reason:       PodInitializing
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7rbs7 (ro)
+Containers:
+  lab3:
+    Container ID:   
+    Image:          lab3_deployed:1.0
+    Image ID:       
+    Port:           8000/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       PodInitializing
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7rbs7 (ro)
+Conditions:
+  Type              Status
+  Initialized       False 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-7rbs7:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  16m   default-scheduler  Successfully assigned w255/deploy-pythonapi-7b6779db7-cgqfl to minikube
+  Normal  Pulled     16m   kubelet            Container image "busybox:1.28" already present on machine
+  Normal  Created    16m   kubelet            Created container init-redis-up
+  Normal  Started    16m   kubelet            Started container init-redis-up
+Name:             deploy-pythonapi-7b6779db7-cgqfl
+Namespace:        w255
+Priority:         0
+Service Account:  default
+Node:             minikube/192.168.49.2
+Start Time:       Wed, 26 Oct 2022 19:14:04 -0700
+Labels:           app=pythonapi
+                  pod-template-hash=7b6779db7
+Annotations:      <none>
+Status:           Pending
+IP:               172.17.0.5
+IPs:
+  IP:           172.17.0.5
+Controlled By:  ReplicaSet/deploy-pythonapi-7b6779db7
+Init Containers:
+  init-redis-up:
+    Container ID:  docker://0c75fc7a5030500fca658094e8c871ca986ef1de244f5f0a63ba8c708057d2a8
+    Image:         busybox:1.28
+    Image ID:      docker-pullable://busybox@sha256:141c253bc4c3fd0a201d32dc1f493bcf3fff003b6df416dea4f41046e0f37d47
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      until nslookup redis-service 6379; do echo waiting for redis; sleep 5; done
+    State:          Running
+      Started:      Wed, 26 Oct 2022 19:14:06 -0700
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7rbs7 (ro)
+  init-redis-ready:
+    Container ID:  
+    Image:         busybox:1.28
+    Image ID:      
+    Port:          <none>
+    Host Port:     <none>
+    Command:
+      sh
+      -c
+      until (printf 'PING
+      ';) | nc redis-service 6379; do echo waiting for redis to respond; sleep 5; done
+    State:          Waiting
+      Reason:       PodInitializing
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7rbs7 (ro)
+Containers:
+  lab3:
+    Container ID:   
+    Image:          lab3_deployed:1.0
+    Image ID:       
+    Port:           8000/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       PodInitializing
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-7rbs7 (ro)
+Conditions:
+  Type              Status
+  Initialized       False 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-7rbs7:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason     Age   From               Message
+  ----    ------     ----  ----               -------
+  Normal  Scheduled  32m   default-scheduler  Successfully assigned w255/deploy-pythonapi-7b6779db7-cgqfl to minikube
+  Normal  Pulled     32m   kubelet            Container image "busybox:1.28" already present on machine
+  Normal  Created    32m   kubelet            Created container init-redis-up
+  Normal  Started    32m   kubelet            Started container init-redis-up
