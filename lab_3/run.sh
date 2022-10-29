@@ -15,18 +15,21 @@ sleep 15
 echo "Creating Namespace"
 Kubectl apply -f lab_3/infra/namespace.yaml
 
-echo "Loading configuration"
+echo "Loading configuration (will sleep for 20 seconds)"
 Kubectl apply -f lab_3/infra/deployment-redis.yaml -n w255
 Kubectl apply -f lab_3/infra/service-redis.yaml -n w255
 Kubectl apply -f lab_3/infra/deployment-pythonapi.yaml -n w255
 Kubectl apply -f lab_3/infra/service-prediction.yaml -n w255
+sleep 20
 
 echo "conducting health check"
 finished=false
 pid=0
 
+#write script for redis, if it runs locally then put in init
+
 while ! $finished; do
-  kubectle port-forward service-pythonapi-service 8000:8000 -n w255 &
+  kubectl port-forward service-pythonapi-service 8000:8000 -n w255 &
   pid=$!
   health_status=$(curl -s -o /dev/null -w "%{http_code}" -X GET "http://localhost:8000/health")
   if [ $health_status = 200 ]; then
@@ -66,3 +69,8 @@ docker stop lab_3
 
 echo "Deleting docker image"
 docker image rm lab3_deployed:1.0
+
+echo "Killing K8s cluster"
+kubectl delete all -n w255
+kubectl delete ns w255
+minikube delete

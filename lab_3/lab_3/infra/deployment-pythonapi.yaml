@@ -15,28 +15,26 @@ spec:
     spec:
       initContainers:
         - name: init-redis-up
-          image: busybox:1.28
-          command: ["sh", "-c", "until nslookup redis-service 6379; do echo 'waiting for redis'; sleep 5; done"]
+          image: busybox
+          command: ["sh", "-c", "until nslookup redis-service.w255.svc.cluster.local; do echo 'waiting for redis'; sleep 5; done"]
         - name: init-redis-ready
-          image: busybox:1.28
-          command: ["sh", "-c", "until (printf 'PING\r\n';) | nc redis-service 6379; do echo 'waiting for redis to respond'; sleep 5; done"]
+          image: busybox
+          command: ["sh", "-c", "until nslookup redis-service.w255.svc.cluster.local; do echo 'waiting for redis'; sleep 5; done"]
       containers:
       - name: lab3
         image: lab3_deployed:1.0
         imagePullPolicy: Never
         ports:
           - containerPort: 8000
-            readinessprobe:
-              httpGet:
-                path: /health
-                port: 8000
-              initialDelaySeconds: 5
-              periodSeconds: 60
-            livenessprobe:
-              httpGet:
-                path: /health
-                port: 8000
-              initialDelaySeconds: 5
-              periodSeconds: 60
-
-
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 5
+          periodSeconds: 60
+#          - livenessProbe:
+#            httpGet:
+#              path: /health
+#              port: 8000
+#            initialDelaySeconds: 5
+#            periodSeconds: 60

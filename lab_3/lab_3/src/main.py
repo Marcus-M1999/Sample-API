@@ -93,7 +93,7 @@ async def prediction(data: DataInputCheck):
     except ValidationError as e:
         raise HTTPException(status_code=422, detail=str(e))
 
-''
+
 
 @app.on_event('startup')
 async def startup():
