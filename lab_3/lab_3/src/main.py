@@ -97,7 +97,7 @@ async def prediction(data: DataInputCheck):
 
 @app.on_event('startup')
 async def startup():
-    redis = aioredis.from_url('redis://redis', encoding = 'utf8', decode_responses = True)
+    redis = aioredis.from_url('redis://redis-service:6379', encoding = 'utf8', decode_responses = True)
     FastAPICache.init(RedisBackend(redis), prefix = 'fastapi-cache')
 
 
