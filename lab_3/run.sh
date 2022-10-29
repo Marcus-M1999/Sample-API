@@ -64,13 +64,7 @@ curl -X 'GET' \
   -H 'accept: application/json'
 
 
-echo "killing container"
-docker stop lab_3
-
-echo "Deleting docker image"
-docker image rm lab3_deployed:1.0
-
 echo "Killing K8s cluster"
-kubectl delete all -n w255
+kubectl delete all --all -n w255
 kubectl delete ns w255
 minikube delete
