@@ -15,12 +15,12 @@ sleep 15
 echo "Creating Namespace"
 Kubectl apply -f lab_3/infra/namespace.yaml
 
-echo "Loading configuration (will sleep for 20 seconds)"
+echo "Loading configuration (will sleep for 40 seconds)"
 Kubectl apply -f lab_3/infra/deployment-redis.yaml -n w255
 Kubectl apply -f lab_3/infra/service-redis.yaml -n w255
 Kubectl apply -f lab_3/infra/deployment-pythonapi.yaml -n w255
 Kubectl apply -f lab_3/infra/service-prediction.yaml -n w255
-sleep 20
+sleep 40
 
 echo "conducting health check"
 finished=false
@@ -29,7 +29,7 @@ pid=0
 #write script for redis, if it runs locally then put in init
 
 while ! $finished; do
-  kubectl port-forward service-pythonapi-service 8000:8000 -n w255 &
+  kubectl port-forward service/prediction-service 8000:8000 -n w255 &
   pid=$!
   health_status=$(curl -s -o /dev/null -w "%{http_code}" -X GET "http://localhost:8000/health")
   if [ $health_status = 200 ]; then
@@ -55,8 +55,16 @@ curl -X 'POST' \
   'http://localhost:8000/predict' \
   -H 'accept: application/json' \
   -H 'Content-Type: application/json' \
-  -d '{"MedInc": 8.3252, "HouseAge": 41.0, "AveRooms": 6.98412698, "AveBedrms": 1.02380952, "Population": 322.0
-                               , "AveOccup": 2.55555556, "Latitude": 37.88, "Longitude": -122.23}'
+  -d '{
+  "MedInc": [10.0, 10.0],
+  "HouseAge": [10.0, 10.0],
+  "AveRooms": [10.0, 10.0],
+  "AveBedrms": [10.0, 10.0],
+  "Population": [10.0, 10.0],
+  "AveOccup": [10.0, 10.0],
+  "Latitude": [10.0, 10.0],
+  "Longitude": [10.0, 10.0]
+}'
 
 echo "testing '/health' endpoint"
 curl -X 'GET' \

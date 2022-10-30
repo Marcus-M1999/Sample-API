@@ -16,5 +16,6 @@ spec:
       containers:
       - name: redis
         image: redis:alpine
+        command: ["redis-server"] #made this change
         ports:
           - containerPort: 6379

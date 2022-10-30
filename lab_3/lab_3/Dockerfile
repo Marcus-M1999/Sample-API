@@ -37,6 +37,6 @@ COPY lab_3/ ./
 
 EXPOSE 8000
 
-HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000/health', timeout=2)"
+#HEALTHCHECK --start-period=30s CMD python -c "import requests; requests.get('http://localhost:8000/health', timeout=2)"
 
 CMD ["uvicorn", "src.main:app", "--reload", "--host", "0.0.0.0"]

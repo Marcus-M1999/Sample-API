@@ -7,7 +7,6 @@ metadata:
   namespace: w255
 spec:
   selector:
-    type: ClusterIP
     app: redis
   ports:
   - protocol: TCP
