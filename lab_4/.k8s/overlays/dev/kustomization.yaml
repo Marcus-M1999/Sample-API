@@ -1,0 +1,8 @@
+---
+namespace: marcusmanos
+bases:
+  - ../../bases
+patches:
+  - path: patch-deployment-lab4.yaml
+    target:
+      kind: Deployment
