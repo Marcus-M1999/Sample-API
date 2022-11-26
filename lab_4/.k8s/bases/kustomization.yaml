@@ -1,5 +1,5 @@
 ---
-namespace: marcusmanos
+namespace: w255
 resources:
   - config-map.yaml
   - persistent-volume.yaml

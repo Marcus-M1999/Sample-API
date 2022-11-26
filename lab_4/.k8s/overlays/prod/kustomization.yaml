@@ -1,5 +1,5 @@
 ---
-namespace: winegarj
+namespace: marcusmanos
 bases:
   - ../../bases
 resources:

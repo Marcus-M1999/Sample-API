@@ -6,7 +6,8 @@ metadata:
   labels:
     app: lab4
 spec:
-  type: ClusterIP
+  type: ClusterIP #ClusterIP
+  #change to LoadBalancer when testing locally
   ports:
     - port: 8000
       targetPort: 8000
