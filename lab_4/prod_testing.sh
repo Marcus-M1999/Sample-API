@@ -5,12 +5,13 @@ echo"Logging into Azure"
 az login --tenant berkeleydatasciw255.onmicrosoft.com
 az account set --subscription="6baae99a-4d64-4071-bfac-c363e71984c3"
 az aks get-credentials --name w255-aks --resource-group w255 --overwrite-existing
-kubectl config use-context 255-aks
+kubectl config use-context w255-aks
 az acr login --name w255mids
 
 NAMESPACE=marcusmanos
 
-TAG='date + "%m%d%H%M%S"'
+#TAG='112820220912'
+TAG="$(date +'%Y-%m-%d_%H-%M')"
 echo "TAG" $TAG
 sed "s/\[TAG\]/$TAG/g" .k8s/overlays/prod/patch-deployment-lab4_copy.yaml > .k8s/overlays/prod/patch-deployment-lab4.yaml
 
@@ -27,9 +28,10 @@ echo "IMAGE_FQDN: " $IMAGE_FQDN
 
 echo "building & running docker container"
 echo "Building Container"
-docker build -t lab4_deployed:1.0 -f lab_4/Dockerfile .
+docker build -t ${IMAGE_NAME}:${TAG} -f lab_4/Dockerfile .
+#docker build --platform linux/amd64 -t ${IMAGE_NAME}:${TAG} -f lab_4/Dockerfile . #made this change
 echo "Start Container in detached mode"
-docker run --rm --name lab_4 -d -p 8000:8000 lab4_deployed:1.0
+docker run --rm --name lab4 -d -p 8000:8000 ${IMAGE_NAME}:${TAG}
 
 
 docker tag ${IMAGE_NAME} ${IMAGE_FQDN}

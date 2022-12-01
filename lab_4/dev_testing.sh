@@ -27,9 +27,9 @@ echo "checking logs"
 kubectl --namespace $NAMESPACE logs deployment.apps/lab4
 
 echo "Deleting all services & pods"
-kubectl delete services lab4 --namespace=$PREFIX
-kubectl delete services redis --namespace=$PREFIX
-kubectl delete --all pods --namespace=$PREFIX
+#kubectl delete services lab4 --namespace=$PREFIX
+#kubectl delete services redis --namespace=$PREFIX
+#kubectl delete --all pods --namespace=$PREFIX
 
 echo "testing '/predict' endpoint"
 curl -X 'POST' \
