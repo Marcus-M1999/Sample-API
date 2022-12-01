@@ -67,20 +67,13 @@ curl -X 'POST' \
 
 
 ## Questions
-##### 1.) What are the benefits of caching?
-Caching enables us to store previous queries and responses. This helps us to return the response to the client without having to run the method that corresponds to the endpoint. This ultimately speeds up the response time in our application while also eliminating calls and cost that will occur due to making predictions. In cases where we send large amounts of data, or our application is being hit more often caching will have a larger impact. 
+##### 1.) What are the downsides of using latest as your docker image tag?
+A docker tag is a series of characters (letters, numbers, slashes, etc.) that follow an image name. They are used to label the image version you plan on using, this allows someone to continuously update the docker image with different versions without interrupting the use of the image by different developers. The latest tag tells Docker to get the latest instance of the image you're using. This could potentially have problems since updates could have security flaws or be incompatible with your current environment. By using a specific docker tag you can control the exact docker image you're using cutting down on any potential security flaws or incompatibilities. 
 
 
-##### 2.) What is the difference between Docker and Kubernetes?
-Docker is a virtualized framework that consists of containers that can hose things such as an API, database, or caching service. This framework runs on top of an operating system and ensures that the application hosting can run as long as a compatible docker version is installed. To use these elements in tandem they must be able to communicate with each other, this happens in docker through a network. As we begin to scale the complexity in docker becomes exponentially more complicated, so Kubernetes was created to help with this problem. Kubernetes runs on top of docker and coordinates communication between the containers, services, load balancers, and other objects. It handles things such as scaling, resource allocation, and load balancing to name a few. In our case, we use docker to create the containers for our API, and Redis caching, then test them using docker networks through docker-compose. We then deploy them using Kubernetes to handle the complexities allowing us to focus on the deployment aspect instead of dealing with the minute details. In summation, Docker is normally used to create containers, and local or small-time testing while Kubernetes is used for deployment into the production enviroment.
+##### 2.) What does kustomize do for us?
+Kustomize is a "configuration manager" for kubectl. This means that it creates templates for your Kubernetes configuration that you can make small changes to deploy different workloads such as deployments, services, or virtual services. One use case for Kustomize is applying changes to a template relating to the docker image. In our case, we used Kustomize to make the necessary small changes to our template used in Lab 3 to deploy our API using Kubernetes to AKS.  
 
-
-##### 3.) What does a kubernetes deployment do?
-In it's simplest form a kubernetes deployment is the blueprind for the pod that will be created. Inside of the configuration file for the deployment you can choose to specify things such as the container(s), ports, docker image, app name, etc. This means that when the replica set is created from the configuration file it will have a number of identical pods which all have the settings listed in the configuration file.
-
-
-##### 3.) What does a kubernetes service do?
-In it's simplest form a kubernetes service connects multiple pods to facilitate communication between them. An example would be how we had services for both our redis caching database and our api. This allowed our API to communicate with the redis container by giving it an ip address, and our API to communicate with incoming commands when testing our using our application. 
 
 
 
