@@ -22,7 +22,7 @@ const features = [
   "Latitude",
   "Longitude",
 ]
-const fixed = [1, 1, 1, 1, 1, 1, 0, 0]
+const fixed = [[1.0, 1.0], [1.0, 1.0], [1.0, 1.0], [1.0, 1.0], [1.0, 1.0], [1.0, 1.0], [0.0, 0.0], [0.0, 0.0]]
 
 const randInt = (max) => (Math.floor(Math.random() * max))
 
@@ -51,7 +51,7 @@ export default () => {
   const healthRes = http.get(`${BASE_URL}/health`)
   check(healthRes, {
     'is 200': (r) => r.status === 200,
-    'status healthy': (r) => r.json('status') === 'healthy',
+    'status healthy': (r) => r.json('status') === 'OK',
   })
 
   const payload = JSON.stringify(generator(CACHE_RATE))
