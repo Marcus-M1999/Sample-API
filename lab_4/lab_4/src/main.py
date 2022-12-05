@@ -27,7 +27,7 @@ class DataInputCheck(BaseModel):
     @validator('MedInc', 'Population','HouseAge', 'AveRooms', 'AveBedrms', 'Population', 'AveOccup')
     def valid_med(cls, v):
 
-        assert isinstance(v[0], float), "Data must be a float"
+        assert isinstance(v, list), "Data must be a float"
         if v[0] < 0:
           raise ValueError('Must be positive')
         return v

@@ -5,6 +5,6 @@ bases:
 resources:
   - virtual-service.yaml
 patches:
-  - path: patch-deployment-project.yaml
+  - path: patch-deployment-lab4.yaml
     target:
       kind: Deployment

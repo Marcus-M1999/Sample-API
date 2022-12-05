@@ -5,5 +5,5 @@ resources:
   - persistent-volume.yaml
   - deployment-lab4.yaml
   - deployment-redis.yaml
-  - service-project.yaml
+  - service-lab4.yaml
   - service-redis.yaml
