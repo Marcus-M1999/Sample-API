@@ -42,7 +42,7 @@ class Sentiment(BaseModel):
 
 
 class SentimentResponse(BaseModel):
-    predictions: list[list[Sentiment]]
+    predictions: {list[Sentiment]}
     # ... [Sentiment]
 
 
