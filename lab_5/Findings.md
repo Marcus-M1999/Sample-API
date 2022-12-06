@@ -17,11 +17,11 @@ I tested the load.js script with 3 different values of 0.1, 0.5, and 0.9 to exam
 
 ## Findings
 
-![image](pictures/0.1 cache.PNG)
+![image](pictures/0.1_cache.PNG)
 
-![image](pictures/0.5 cache.PNG)
+![image](pictures/0.5_cache.PNG)
 
-![image](pictures/0.9 cache.PNG)
+![image](pictures/0.9_cache.PNG)
 
 ### Finding 1
 
