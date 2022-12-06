@@ -33,22 +33,23 @@ def startup():
 
 
 class SentimentRequest(BaseModel):
+    text: list[str]
+
+
+class Sentiment(BaseModel):
     label: str
     score: float
 
 
-class Sentiment(BaseModel):
-    text: list[str]
-
 
 class SentimentResponse(BaseModel):
-    predictions: {list[Sentiment]}
+    predictions: list[list[Sentiment]]
     # ... [Sentiment]
 
 
 @app.post("/predict", response_model=SentimentResponse)
 @cache(expire=30)
-def predict(sentiments: SentimentRequest):
+async def predict(sentiments: SentimentRequest):
     return {"predictions": classifier(sentiments.text)}
 
 

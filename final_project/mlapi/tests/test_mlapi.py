@@ -1,9 +1,11 @@
+import sys
+sys.path
+sys.path.append('/mlapi/src/main.py')
 import pytest
 from fastapi.testclient import TestClient
 from fastapi_cache import FastAPICache
 from fastapi_cache.backends.inmemory import InMemoryBackend
 from numpy.testing import assert_almost_equal
-from src import __version__
 from src.main import app
 
 
@@ -36,25 +38,25 @@ def test_predict(client):
     assert response.json()["predictions"][1][1]["label"] == "POSITIVE"
     assert (
         assert_almost_equal(
-            response.json()["predictions"][0][0]["score"], 0.883, decimal=3
+            response.json()["predictions"][0][0]["score"], 0.936, decimal=3
         )
         is None
     )
     assert (
         assert_almost_equal(
-            response.json()["predictions"][0][1]["score"], 0.116, decimal=3
+            response.json()["predictions"][0][1]["score"], 0.064, decimal=3
         )
         is None
     )
     assert (
         assert_almost_equal(
-            response.json()["predictions"][1][0]["score"], 0.004, decimal=3
+            response.json()["predictions"][1][0]["score"], 0.003, decimal=3
         )
         is None
     )
     assert (
         assert_almost_equal(
-            response.json()["predictions"][1][1]["score"], 0.996, decimal=3
+            response.json()["predictions"][1][1]["score"], 0.997, decimal=3
         )
         is None
     )
