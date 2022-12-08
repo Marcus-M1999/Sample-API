@@ -2,22 +2,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: project
+  name: lab4
   labels:
-    app: project
+    app: lab4
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: project
+      app: lab4
   template:
     metadata:
       labels:
-        app: project
+        app: lab4
     spec:
       containers:
-        - name: project
-          image: marcusmanos/project:latest
+        - name: lab4
+          image: marcusmanos/lab4:latest
           resources:
             requests:
               cpu: 200m
@@ -63,12 +63,12 @@ spec:
 apiVersion: autoscaling/v1
 kind: HorizontalPodAutoscaler
 metadata:
-  name: project
+  name: lab4
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: project
+    name: lab4
   minReplicas: 1
   maxReplicas: 10
   targetCPUUtilizationPercentage: 50

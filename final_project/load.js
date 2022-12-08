@@ -38,8 +38,8 @@ const generator = (cacheRate) => {
   }
 }
 
-const NAMESPACE = "marcusmanos"
-const BASE_URL = `https://${NAMESPACE}.mids-w255.com`;
+const NAMESPACE = 'marcusmanos'
+const BASE_URL = `https://${NAMESPACE}.mids255.com`;
 const CACHE_RATE = .95
 
 export default () => {

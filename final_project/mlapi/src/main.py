@@ -48,7 +48,7 @@ class SentimentResponse(BaseModel):
 
 
 @app.post("/predict", response_model=SentimentResponse)
-@cache(expire=30)
+@cache(expire=600)
 async def predict(sentiments: SentimentRequest):
     return {"predictions": classifier(sentiments.text)}
 

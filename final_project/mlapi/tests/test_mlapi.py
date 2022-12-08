@@ -60,3 +60,40 @@ def test_predict(client):
         )
         is None
     )
+
+
+def test_fail_get(client):
+    response = client.get(
+        "/predict"
+    )
+
+    assert response.status_code == 405
+
+
+def test_fail_data(client):
+    data = {"text": "I hate you."}
+    response = client.post(
+        "/predict",
+        json=data,
+    )
+
+    assert response.status_code == 422
+
+
+
+def test_fail_post_health(client):
+    data = {"text": "I hate you."}
+    response = client.post(
+        "/health",
+        json=data
+    )
+
+    assert response.status_code == 405
+
+def test_fail_endpoint(client):
+    data = {"text": "I hate you."}
+    response = client.get(
+        "/fake-endpoint"
+    )
+
+    assert response.status_code == 404
