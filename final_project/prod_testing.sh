@@ -59,3 +59,6 @@ curl -X 'POST' \
 curl -X 'GET' \
     'https://marcusmanos.mids255.com/health' \
     -H 'accept: application/json'
+
+
+  #bash -c 'NAMESPACE=marcusmanos; k6 run --summary-trend-stats="min,med,avg,max,p(99)" load.js'

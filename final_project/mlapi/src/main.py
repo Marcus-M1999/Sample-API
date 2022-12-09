@@ -11,8 +11,8 @@ from fastapi_cache import FastAPICache
 from fastapi_cache.decorator import cache
 
 model_path = "./distilbert-base-uncased-finetuned-sst2"
-model = AutoModelForSequenceClassification.from_pretrained(model_path)
-tokenizer = AutoTokenizer.from_pretrained(model_path)
+model = AutoModelForSequenceClassification.from_pretrained(model_path, local_files_only=True)
+tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
 classifier = pipeline(
     task="text-classification",
     model=model,
@@ -48,7 +48,7 @@ class SentimentResponse(BaseModel):
 
 
 @app.post("/predict", response_model=SentimentResponse)
-@cache(expire=600)
+@cache(expire=300)
 async def predict(sentiments: SentimentRequest):
     return {"predictions": classifier(sentiments.text)}
 
