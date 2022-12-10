@@ -1,8 +1,0 @@
----
-namespace: w255
-bases:
-  - ../../bases
-patches:
-  - path: patch-deployment-project.yaml
-    target:
-      kind: Deployment

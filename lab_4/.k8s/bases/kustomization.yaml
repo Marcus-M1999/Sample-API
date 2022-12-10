@@ -1,9 +1,0 @@
----
-namespace: w255
-resources:
-  - config-map.yaml
-  - persistent-volume.yaml
-  - deployment-project.yaml
-  - deployment-redis.yaml
-  - service-lab4.yaml
-  - service-redis.yaml
