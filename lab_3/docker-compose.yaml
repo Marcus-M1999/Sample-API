@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  redis:
+    image: redis
+    container_name: redis-service
+    ports:
+    - 6379:6379
+    networks:
+    - wk06-net
+
+  lab:
+    image: lab3_deployed:1.0
+    networks:
+    - wk06-net
+    ports:
+    - 8000:8000
+    volumes:
+    - .:/usr/app
+networks:
+  wk06-net:
